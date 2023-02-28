@@ -231,6 +231,9 @@ namespace Project.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ServiceID")
                         .HasColumnType("INTEGER");
 
@@ -238,7 +241,7 @@ namespace Project.Migrations
 
                     b.HasIndex("ServiceID");
 
-                    b.ToTable("Offer");
+                    b.ToTable("Offers");
                 });
 
             modelBuilder.Entity("Project.Models.Service", b =>
@@ -248,11 +251,9 @@ namespace Project.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

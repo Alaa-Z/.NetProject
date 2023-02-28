@@ -57,8 +57,8 @@ namespace Project.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Details = table.Column<string>(type: "TEXT", nullable: false),
-                    ImageName = table.Column<string>(type: "TEXT", nullable: false)
+                    Details = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageName = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -172,21 +172,22 @@ namespace Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Offer",
+                name: "Offers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Details = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<int>(type: "INTEGER", nullable: false),
                     ImageName = table.Column<string>(type: "TEXT", nullable: false),
                     ServiceID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Offer", x => x.Id);
+                    table.PrimaryKey("PK_Offers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Offer_Services_ServiceID",
+                        name: "FK_Offers_Services_ServiceID",
                         column: x => x.ServiceID,
                         principalTable: "Services",
                         principalColumn: "Id",
@@ -231,8 +232,8 @@ namespace Project.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offer_ServiceID",
-                table: "Offer",
+                name: "IX_Offers_ServiceID",
+                table: "Offers",
                 column: "ServiceID");
         }
 
@@ -255,7 +256,7 @@ namespace Project.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Offer");
+                name: "Offers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

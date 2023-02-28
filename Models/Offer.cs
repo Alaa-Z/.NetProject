@@ -21,6 +21,11 @@ namespace Project.Models
         public string? Details { get; set; }
 
         [Required]
+        [Display(Name = "Price")]
+        public int Price { get; set; }
+
+
+        [Required]
         [Display(Name = "Name of the Image")]
         public string? ImageName { get; set; }
 
