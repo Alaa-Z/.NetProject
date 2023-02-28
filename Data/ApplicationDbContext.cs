@@ -10,6 +10,5 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
-    public DbSet<Service> Services { get; set; }
 }
 
