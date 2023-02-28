@@ -19,7 +19,10 @@
                 @Html.DisplayNameFor(model => model.Details)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageName)
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AltText)
             </th>
             <th></th>
         </tr>
@@ -33,8 +36,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Details)
             </td>
+            <td style="width:100px;height:100px" >
+                <img src="@item.ImagePath" alt="@item.AltText" style="width:100%" />
+            </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
+                @Html.DisplayFor(modelItem => item.AltText)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -48,7 +48,7 @@ namespace Project.Controllers
         // GET: Offer/Create
         public IActionResult Create()
         {
-            ViewData["ServiceID"] = new SelectList(_context.Services, "Id", "Name");
+            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Details,Price,ImageName,ServiceID")] Offer offer)
+        public async Task<IActionResult> Create([Bind("Id,Name,Details,Price,ImagePath,AltText,ServiceId")] Offer offer)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace Project.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceID"] = new SelectList(_context.Services, "Id", "Name", offer.ServiceID);
+            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details", offer.ServiceId);
             return View(offer);
         }
 
@@ -82,7 +82,7 @@ namespace Project.Controllers
             {
                 return NotFound();
             }
-            ViewData["ServiceID"] = new SelectList(_context.Services, "Id", "Name", offer.ServiceID);
+            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details", offer.ServiceId);
             return View(offer);
         }
 
@@ -91,7 +91,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,Price,ImageName,ServiceID")] Offer offer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,Price,ImagePath,AltText,ServiceId")] Offer offer)
         {
             if (id != offer.Id)
             {
@@ -118,7 +118,7 @@ namespace Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceID"] = new SelectList(_context.Services, "Id", "Name", offer.ServiceID);
+            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details", offer.ServiceId);
             return View(offer);
         }
 

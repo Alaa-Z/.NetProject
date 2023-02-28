@@ -11,7 +11,7 @@ using Project.Data;
 namespace Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230228113752_InititalCreate")]
+    [Migration("20230228154212_InititalCreate")]
     partial class InititalCreate
     {
         /// <inheritdoc />
@@ -222,12 +222,14 @@ namespace Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AltText")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ImageName")
-                        .IsRequired()
+                    b.Property<string>("ImagePath")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -237,12 +239,12 @@ namespace Project.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ServiceID")
+                    b.Property<int>("ServiceId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceID");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Offers");
                 });
@@ -253,10 +255,14 @@ namespace Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Details")
+                    b.Property<string>("AltText")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ImageName")
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImagePath")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -323,7 +329,7 @@ namespace Project.Migrations
                 {
                     b.HasOne("Project.Models.Service", "Service")
                         .WithMany("Offer")
-                        .HasForeignKey("ServiceID")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

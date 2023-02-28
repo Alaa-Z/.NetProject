@@ -57,8 +57,9 @@ namespace Project.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Details = table.Column<string>(type: "TEXT", nullable: true),
-                    ImageName = table.Column<string>(type: "TEXT", nullable: true)
+                    Details = table.Column<string>(type: "TEXT", nullable: false),
+                    ImagePath = table.Column<string>(type: "TEXT", nullable: true),
+                    AltText = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -180,15 +181,16 @@ namespace Project.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Details = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<int>(type: "INTEGER", nullable: false),
-                    ImageName = table.Column<string>(type: "TEXT", nullable: false),
-                    ServiceID = table.Column<int>(type: "INTEGER", nullable: false)
+                    ImagePath = table.Column<string>(type: "TEXT", nullable: true),
+                    AltText = table.Column<string>(type: "TEXT", nullable: true),
+                    ServiceId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Offers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Offers_Services_ServiceID",
-                        column: x => x.ServiceID,
+                        name: "FK_Offers_Services_ServiceId",
+                        column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -232,9 +234,9 @@ namespace Project.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offers_ServiceID",
+                name: "IX_Offers_ServiceId",
                 table: "Offers",
-                column: "ServiceID");
+                column: "ServiceId");
         }
 
         /// <inheritdoc />

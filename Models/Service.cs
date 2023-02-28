@@ -16,17 +16,26 @@ namespace Project.Models
         public string? Name { get; set; }
 
 
-        //[Required]
+        [Required]
         [Display(Name = "Content")]
         public string? Details { get; set; }
 
-        //[Required]
-        [Display(Name = "Name of the Image")]
-        public string? ImageName { get; set; }
+        //[Display(Name = "FileName - image")]
+        //public string? ImageName { get; set; }
+
+        //[NotMapped]
+        //[Display(Name = "Image")]
+        //public IFormFile ImageFile { get; set; }
+
+        [Display(Name = "Image")]
+        public string? ImagePath { get; set; }
 
         [NotMapped]
-        [Display(Name = "Image")]
+        [Display(Name = "Upload image file")]
         public IFormFile? ImageFile { get; set; }
+
+        [Display(Name = "AltText")]
+        public string? AltText { get; set; }
 
         public ICollection<Offer>? Offer { get; set; }
 

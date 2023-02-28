@@ -11,23 +11,27 @@
     <h4>Service</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Details)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Details)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageName)
+        <dd class="col-sm-10" style="width:100px;height:100px">
+            <img src="@Model.ImagePath" alt="@Model.AltText"  style="width:100%" />
+        </dd>
+       
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AltText)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageName)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AltText)
         </dd>
     </dl>
     

@@ -1,3 +1,4 @@
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,15 @@ namespace Project.Controllers
     public class ServiceController : Controller
     {
         private readonly ApplicationDbContext _context;
+        // to get the root path of my application
+        private readonly IWebHostEnvironment _env; 
 
-        public ServiceController(ApplicationDbContext context)
+
+        public ServiceController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
+
         }
 
         // GET: Service
@@ -52,43 +58,36 @@ namespace Project.Controllers
         }
 
         // POST: Service/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Details,ImageName")] Service service)
+        public async Task<IActionResult> Create([Bind("Name,Details,ImageFile,AltText")] Service service)
         {
             if (ModelState.IsValid)
             {
+                // if image file exist
+                if (service.ImageFile != null)
+                {
+                    //Save the uploaded image file to wwwroot / uploads directory
+                    var imagePath = Path.Combine(_env.WebRootPath, "uploads", service.ImageFile.FileName);
+                    // upload to folder using FileStream class 
+                    using (var stream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        await service.ImageFile.CopyToAsync(stream);
+                    }
+                    service.ImagePath = "/uploads/" + service.ImageFile.FileName;
+                }
                 _context.Add(service);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(service);
         }
+       
 
-        // GET: Service/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Services == null)
-            {
-                return NotFound();
-            }
-
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
-            {
-                return NotFound();
-            }
-            return View(service);
-        }
-
-        // POST: Service/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Service/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,ImageName")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,ImageFile,AltText")] Service service)
         {
             if (id != service.Id)
             {
@@ -99,6 +98,34 @@ namespace Project.Controllers
             {
                 try
                 {
+                    var existingService = await _context.Services.FindAsync(id);
+
+                    if (existingService == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (service.ImageFile != null)
+                    {
+                        //Save the uploaded image file to wwwroot / uploads directory
+
+                        var UpdatedimagePath = Path.Combine(_env.WebRootPath, "uploads", service.ImageFile.FileName);
+                        using (var stream = new FileStream(UpdatedimagePath, FileMode.Create))
+                        {
+                            await service.ImageFile.CopyToAsync(stream);
+                        }
+                        service.ImagePath = "/uploads/" + service.ImageFile.FileName;
+
+                    }
+                    else
+                    {
+                        // if there is no new image then keep the old path 
+                        service.ImagePath = existingService.ImagePath;
+                    }
+
+                    // Before attaching the updated entity detach the existing entity 
+                    _context.Entry(existingService).State = EntityState.Detached;
+
                     _context.Update(service);
                     await _context.SaveChangesAsync();
                 }
@@ -114,6 +141,24 @@ namespace Project.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            return View(service);
+        }
+
+
+
+        // GET: Service/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Services == null)
+            {
+                return NotFound();
+            }
+
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
+            {
+                return NotFound();
             }
             return View(service);
         }
