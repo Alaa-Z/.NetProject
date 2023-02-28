@@ -20,12 +20,6 @@ namespace Project.Models
         [Display(Name = "Content")]
         public string? Details { get; set; }
 
-        //[Display(Name = "FileName - image")]
-        //public string? ImageName { get; set; }
-
-        //[NotMapped]
-        //[Display(Name = "Image")]
-        //public IFormFile ImageFile { get; set; }
 
         [Display(Name = "Image")]
         public string? ImagePath { get; set; }

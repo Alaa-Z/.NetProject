@@ -22,7 +22,6 @@ namespace Project.Controllers
         {
             _context = context;
             _env = env;
-
         }
 
         // GET: Service

@@ -25,17 +25,6 @@ namespace Project.Models
         public int Price { get; set; }
 
 
-        //[Display(Name = "FileName - image")]
-        //public string? ImageName { get; set; }
-
-        //[NotMapped]
-        //[Display(Name = "Image")]
-        //public IFormFile ImageFile { get; set; }
-
-        //[Required]
-        //[Display(Name = "AltText")]
-        //public string? AltText { get; set; }
-
         [Display(Name = "Image")]
         public string? ImagePath { get; set; }
 

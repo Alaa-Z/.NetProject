@@ -1,3 +1,5 @@
+
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +10,21 @@ using Microsoft.EntityFrameworkCore;
 using Project.Data;
 using Project.Models;
 
+
 namespace Project.Controllers
 {
     public class OfferController : Controller
     {
         private readonly ApplicationDbContext _context;
+        // to get the root path of my application
+        private readonly IWebHostEnvironment _env;
 
-        public OfferController(ApplicationDbContext context)
+
+        public OfferController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
+
         }
 
         // GET: Offer
@@ -52,46 +60,40 @@ namespace Project.Controllers
             return View();
         }
 
+
         // POST: Offer/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Details,Price,ImagePath,AltText,ServiceId")] Offer offer)
+        public async Task<IActionResult> Create([Bind("Id,Name,Details,Price,ImageFile,AltText,ServiceId")] Offer offer)
         {
             if (ModelState.IsValid)
             {
+                // if image file exist
+                if (offer.ImageFile != null)
+                {
+                    //Save the uploaded image file to wwwroot / uploads directory
+                    var imagePath = Path.Combine(_env.WebRootPath, "uploads", offer.ImageFile.FileName);
+                    // upload to folder using FileStream class 
+                    using (var stream = new FileStream(imagePath, FileMode.Create))
+                    {
+                        await offer.ImageFile.CopyToAsync(stream);
+                    }
+                    offer.ImagePath = "/uploads/" + offer.ImageFile.FileName;
+                }
                 _context.Add(offer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details", offer.ServiceId);
             return View(offer);
         }
 
-        // GET: Offer/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Offers == null)
-            {
-                return NotFound();
-            }
-
-            var offer = await _context.Offers.FindAsync(id);
-            if (offer == null)
-            {
-                return NotFound();
-            }
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details", offer.ServiceId);
-            return View(offer);
-        }
-
+      
         // POST: Offer/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,Price,ImagePath,AltText,ServiceId")] Offer offer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,Price,ImageFile,AltText,ServiceId")] Offer offer)
         {
             if (id != offer.Id)
             {
@@ -102,6 +104,34 @@ namespace Project.Controllers
             {
                 try
                 {
+                    var existingOffer = await _context.Offers.FindAsync(id);
+
+                    if (existingOffer == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (offer.ImageFile != null)
+                    {
+                        //Save the uploaded image file to wwwroot / uploads directory
+
+                        var UpdatedimagePath = Path.Combine(_env.WebRootPath, "uploads", offer.ImageFile.FileName);
+                        using (var stream = new FileStream(UpdatedimagePath, FileMode.Create))
+                        {
+                            await offer.ImageFile.CopyToAsync(stream);
+                        }
+                        offer.ImagePath = "/uploads/" + offer.ImageFile.FileName;
+
+                    }
+                    else
+                    {
+                        // if there is no new image then keep the old path 
+                        offer.ImagePath = existingOffer.ImagePath;
+                    }
+
+                    // Before attaching the updated entity detach the existing entity 
+                    _context.Entry(existingOffer).State = EntityState.Detached;
+
                     _context.Update(offer);
                     await _context.SaveChangesAsync();
                 }
@@ -117,6 +147,22 @@ namespace Project.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            return View(offer);
+        }
+
+        // GET: Offer/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Offers == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _context.Offers.FindAsync(id);
+            if (offer == null)
+            {
+                return NotFound();
             }
             ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details", offer.ServiceId);
             return View(offer);
