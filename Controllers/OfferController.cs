@@ -24,7 +24,6 @@ namespace Project.Controllers
         {
             _context = context;
             _env = env;
-
         }
 
         // GET: Offer
@@ -56,7 +55,8 @@ namespace Project.Controllers
         // GET: Offer/Create
         public IActionResult Create()
         {
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details");
+            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name");
+            //ViewBag.Services = _context.Services.ToList();
             return View();
         }
 
@@ -164,7 +164,7 @@ namespace Project.Controllers
             {
                 return NotFound();
             }
-            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Details", offer.ServiceId);
+            ViewData["ServiceId"] = new SelectList(_context.Services, "Id", "Name", offer.ServiceId);
             return View(offer);
         }
 

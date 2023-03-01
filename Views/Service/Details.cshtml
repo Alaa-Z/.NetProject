@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.Details)
         </dt>
         <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.Details)
+            @Html.Raw(Model.Details)
         </dt>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ImagePath)

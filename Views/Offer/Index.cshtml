@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Details)
+                @Html.Raw(item.Details)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.AltText)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Service.Details)
+                @Html.DisplayFor(modelItem => item.Service.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -19,7 +19,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Details" class="control-label"></label>
-                <input asp-for="Details" class="form-control" />
+                @*<input asp-for="Details" class="form-control" />*@
+                <textarea asp-for="Details" id="Details" class="ckeditor" name="Details"></textarea>
                 <span asp-validation-for="Details" class="text-danger"></span>
             </div>
             <div class="form-group">

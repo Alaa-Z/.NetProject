@@ -3,3 +3,7 @@
 
 // Write your JavaScript code.
 
+$(document).ready(function () {
+    CKEDITOR.replace('#Details');
+    CKEDITOR.replace('#OfferDetails');
+});

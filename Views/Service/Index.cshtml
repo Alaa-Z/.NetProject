@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Details)
+                @Html.Raw(item.Details)
             </td>
             <td style="width:100px;height:100px" >
                 <img src="@item.ImagePath" alt="@item.AltText" style="width:100%" />
