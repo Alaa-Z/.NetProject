@@ -21,8 +21,12 @@ namespace Project.Models
         public string? Details { get; set; }
 
 
+        //[Display(Name = "Image")]
+        //public string? ImagePath { get; set; }
+
         [Display(Name = "Image")]
-        public string? ImagePath { get; set; }
+        public string? ImagePath { get; set; } = "https://localhost:7014/api/ServiceApi/uploads/";
+
 
         [NotMapped]
         [Display(Name = "Upload image file")]
