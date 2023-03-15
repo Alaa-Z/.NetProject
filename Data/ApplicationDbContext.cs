@@ -13,6 +13,7 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Service> Services { get; set; }
     public DbSet<Offer> Offers { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
 }
 
