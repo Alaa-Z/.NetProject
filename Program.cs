@@ -19,7 +19,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-// Add CORS policy
+// Add CORS 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin", builder => builder
@@ -55,7 +55,6 @@ else
 //    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST");
 //    await next();
 //});
-
 
 
 app.UseHttpsRedirection();
