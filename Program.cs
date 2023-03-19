@@ -6,6 +6,7 @@ using Project.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Project.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 

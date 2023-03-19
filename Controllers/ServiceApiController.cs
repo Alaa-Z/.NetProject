@@ -33,6 +33,8 @@ namespace Project.Controllers
                 {
                     service.ImagePath = $"https://localhost:7014{service.ImagePath}";
                 }
+
+              
             });
             return services;
         }
@@ -126,5 +128,26 @@ namespace Project.Controllers
         {
             return (_context.Services?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+
+        //   api/ServiceApi/{serviceId}/Offers
+        [HttpGet("{serviceId}/offers")]
+        public IActionResult GetOffersForService(int serviceId)
+        {
+            var service = _context.Services.Include(s => s.Offer).SingleOrDefault(s => s.Id == serviceId);
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            var offers = service.Offer;
+
+            return Ok(offers);
+        }
+
+
+
+
     }
 }

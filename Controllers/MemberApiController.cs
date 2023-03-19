@@ -24,12 +24,17 @@ namespace Project.Controllers
         // GET: api/MemberApi
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Member>>> GetMember()
-        {
-          if (_context.Members == null)
-          {
-              return NotFound();
-          }
-            return await _context.Members.ToListAsync();
+        {  
+            var members = await _context.Members.ToListAsync();
+            members.ForEach(member =>
+            {
+                if (!string.IsNullOrEmpty(member.ImagePath))
+                {
+                    member.ImagePath = $"https://localhost:7014{member.ImagePath}";
+                }
+            });
+            return members;
+
         }
 
         // GET: api/MemberApi/5

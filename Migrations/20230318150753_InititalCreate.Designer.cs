@@ -11,7 +11,7 @@ using Project.Data;
 namespace Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230315182330_InititalCreate")]
+    [Migration("20230318150753_InititalCreate")]
     partial class InititalCreate
     {
         /// <inheritdoc />

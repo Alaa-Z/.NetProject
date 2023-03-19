@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Project.Models;
 
 namespace Project.Models
@@ -26,7 +27,7 @@ namespace Project.Models
 
 
         [Display(Name = "Image")]
-        public string? ImagePath { get; set; }
+        public string? ImagePath { get; set; } = "https://localhost:7014/api/ServiceApi/uploads/";
 
         [NotMapped]
         [Display(Name = "Upload image file")]
@@ -39,6 +40,7 @@ namespace Project.Models
         [Display(Name = "Select a service")]
         public int ServiceId { get; set; }
 
+        [JsonIgnore]
         public Service? Service { get; set; }
 
 
