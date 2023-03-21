@@ -10,36 +10,25 @@
 <div>
     <h4>Offer</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dd class="col-sm-10" style="width:100px;height:100px">
-            <img src="@Model.ImagePath" alt="@Model.AltText" style="width:100%" />
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AltText)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AltText)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service)
-        </dt>
-    </dl>
-    
+    <div class="">
+        <h4>@Html.DisplayNameFor(model => model.Name)</h4>
+        <p>@Html.DisplayFor(model => model.Name)</p>
+
+        <h4>@Html.DisplayNameFor(model => model.Details)</h4>
+        <p>@Html.Raw(Model.Details)</p>
+
+
+        <h4>@Html.DisplayNameFor(model => model.Price)</h4>
+        <p>@Html.DisplayFor(model => model.Price)</p>
+
+
+        <h4>@Html.DisplayNameFor(model => model.AltText)</h4>
+        <p>@Html.DisplayFor(model => model.AltText)</p>
+
+        <h4>@Html.DisplayNameFor(model => model.Service)</h4>
+        <p>@Html.DisplayFor(model => model.Service.Name)</p>
+
+    </div>
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
