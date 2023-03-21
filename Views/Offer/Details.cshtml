@@ -4,51 +4,37 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Offer</h4>
+<div class="container">
+    <h1 class="text-center"> Offer info </h1>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Details)
-        </dt>
-        <dt class="col-sm-10">
-            @Html.Raw(Model.Details)
-        </dt>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-        <dt class="col-sm-10">
-            <img src="@Model.ImagePath" alt="@Model.AltText" style="width:200px" />
-        </dt>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AltText)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AltText)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Service)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Service.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="row">
+        <div class=" text-center">
+            <img src="@Model.ImagePath" alt="@Model.AltText" class="img-fluid w-50 d-block mx-auto" />
+        </div>
+        <div class="">
+            <h4>@Html.DisplayNameFor(model => model.Name)</h4>
+            <p>@Html.DisplayFor(model => model.Name)</p>
+
+            <h4>@Html.DisplayNameFor(model => model.Details)</h4>
+            <p>@Html.Raw(Model.Details)</p>
+
+
+            <h4>@Html.DisplayNameFor(model => model.Price)</h4>
+            <p>@Html.DisplayFor(model => model.Price)</p>
+
+
+            <h4>@Html.DisplayNameFor(model => model.AltText)</h4>
+            <p>@Html.DisplayFor(model => model.AltText)</p>
+
+            <h4>@Html.DisplayNameFor(model => model.Service)</h4>
+            <p>@Html.DisplayFor(model => model.Service.Name)</p>
+
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
 </div>
