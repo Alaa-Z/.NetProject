@@ -13,7 +13,7 @@ namespace Project.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Name of the offer")]
+        [Display(Name = "Name")]
         public string? Name { get; set; }
 
 

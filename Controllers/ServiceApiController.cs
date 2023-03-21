@@ -129,7 +129,7 @@ namespace Project.Controllers
             return (_context.Services?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-
+        // Get offers inside a service 
         //   api/ServiceApi/{serviceId}/Offers
         [HttpGet("{serviceId}/offers")]
         public IActionResult GetOffersForService(int serviceId)
@@ -145,9 +145,5 @@ namespace Project.Controllers
 
             return Ok(offers);
         }
-
-
-
-
     }
 }
