@@ -25,11 +25,40 @@ namespace Project.Controllers
         }
 
         // GET: Service
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-              return _context.Services != null ? 
-                          View(await _context.Services.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Services'  is null.");
+            // to add sorting 
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            var services = from s in _context.Services
+                           select s;
+
+            // To search for a service 
+            ViewData["CurrentFilter"] = searchString;
+            var myContext = _context.Services;
+
+            // if we entered a search string 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var query = myContext.Where(c => c.Name.Contains(searchString));
+
+                return View(await query.AsNoTracking().ToListAsync());
+            }
+
+            // to handle the sorting 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    services = services.OrderByDescending(s => s.Name);
+                    break;
+
+                default:
+                    services = services.OrderBy(s => s.Name);
+                    break;
+            }
+
+            return View(await services.AsNoTracking().ToListAsync());
+
         }
 
         // GET: Service/Details/5
