@@ -1,4 +1,3 @@
-
 using System.IO;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Project.Data;
 using Project.Models;
+using Microsoft.Data.SqlClient;
 
 
 namespace Project.Controllers
@@ -27,10 +27,39 @@ namespace Project.Controllers
         }
 
         // GET: Offer
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-            var applicationDbContext = _context.Offers.Include(o => o.Service);
-            return View(await applicationDbContext.ToListAsync());
+            // to add sorting 
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            var offers = from o in _context.Offers
+                          select o;
+
+            // To search for a offer 
+            ViewData["CurrentFilter"] = searchString;
+            var myContext = _context.Offers;
+
+            // if we entered a search string 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var query = myContext.Where(c => c.Name.Contains(searchString));
+
+                return View(await query.AsNoTracking().ToListAsync());
+            }
+
+            // to handle the sorting 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    offers = offers.OrderByDescending(s => s.Name);
+                    break;
+
+                default:
+                    offers = offers.OrderBy(s => s.Name);
+                    break;
+            }
+
+            return View(await offers.AsNoTracking().ToListAsync());
         }
 
         // GET: Offer/Details/5

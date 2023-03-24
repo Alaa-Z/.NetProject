@@ -45,7 +45,16 @@
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
                             <td style="width:200px;height:200px">
-                                <img src="@item.ImagePath" alt="@item.AltText" class="img-fluid" />
+                                @if (!string.IsNullOrEmpty(item.ImagePath))
+                                {
+                                    if (item.ImagePath.ToLower().EndsWith(".png") || item.ImagePath.ToLower().EndsWith(".jpg") || item.ImagePath.ToLower().EndsWith(".jpeg"))
+                                    {
+                                        <img src="@item.ImagePath" alt="@item.AltText" class="img-fluid" />
+                                    }
+                                    else
+                                    { <p>No image available</p>
+                                    }
+                                }
                             </td>
                             <td>
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary m-1">Edit</a>

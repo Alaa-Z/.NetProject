@@ -24,11 +24,40 @@ namespace Project.Controllers
         }
 
         // GET: Member
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder)
         {
-              return _context.Members != null ? 
-                          View(await _context.Members.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Member'  is null.");
+            // to add sorting 
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            var members = from m in _context.Members
+                           select m;
+
+            // To search for a member 
+            ViewData["CurrentFilter"] = searchString;
+            var myContext = _context.Members;
+
+            // if we entered a search string 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var query = myContext.Where(c => c.Name.Contains(searchString));
+
+                return View(await query.AsNoTracking().ToListAsync());
+            }
+
+            // to handle the sorting 
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    members = members.OrderByDescending(s => s.Name);
+                    break;
+
+                default:
+                    members = members.OrderBy(s => s.Name);
+                    break;
+            }
+
+            return View(await members.AsNoTracking().ToListAsync());
+
         }
 
         // GET: Member/Details/5

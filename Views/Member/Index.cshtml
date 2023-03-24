@@ -13,13 +13,24 @@
     </div>
 </div>
 
+@*Form for the search*@
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
 <div class="row">
     <div class="col-sm-12">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
+                        @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.JobTitle)
@@ -49,19 +60,30 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Email)
                         </td>
+                       
+
                         <td style="width:100px;height:100px">
-                            <img src="@item.ImagePath" alt="@item.AltText" style="width:100%" />
+                            @if (!string.IsNullOrEmpty(item.ImagePath))
+                            {
+                                if (item.ImagePath.ToLower().EndsWith(".png") || item.ImagePath.ToLower().EndsWith(".jpg") || item.ImagePath.ToLower().EndsWith(".jpeg"))
+                                {
+                                    <img src="@item.ImagePath" alt="@item.AltText" style="width:100%" />
+                                }
+                                else
+                                { <p>No image available</p>
+                                }
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.AltText)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary m-1">Edit</a> 
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary m-1">Edit</a>
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info m-1">Details</a>
                             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">Delete</a>
                         </td>
                     </tr>
-                    }
+                }
             </tbody>
         </table>
     </div>
