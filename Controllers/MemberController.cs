@@ -105,6 +105,11 @@ namespace Project.Controllers
                 }
                     member.ImagePath = "/uploads/" + member.ImageFile.FileName;
                 }
+                //else
+                //{
+                //    member.ImagePath = "https://localhost:7014/uploads/avatar.jpg";
+                //}
+
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

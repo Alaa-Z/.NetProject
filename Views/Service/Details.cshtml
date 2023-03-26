@@ -9,7 +9,17 @@
     <hr />
     <div class="row">
         <div class=" text-center">
-            <img src="@Model.ImagePath" alt="@Model.AltText" class="img-fluid w-50 d-block mx-auto" />
+            @if (!string.IsNullOrEmpty(@Model.ImagePath))
+            {
+                if (@Model.ImagePath.ToLower().EndsWith(".png") || @Model.ImagePath.ToLower().EndsWith(".jpg") || @Model.ImagePath.ToLower().EndsWith(".jpeg"))
+                {
+                    <img src="@Model.ImagePath" alt="@Model.AltText" class="img-fluid w-50 d-block mx-auto" />
+
+                }
+                else
+                { <p>No image available</p>
+                }
+            }
         </div>
         <div class="">
             <h4>@Html.DisplayNameFor(model => model.Name)</h4>

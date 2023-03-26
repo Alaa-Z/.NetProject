@@ -21,11 +21,12 @@ namespace Project.Models
 
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string? Email { get; set; }
 
 
         [Display(Name = "Image")]
-        public string? ImagePath { get; set; } = "https://localhost:7014/api/MemeberApi/uploads/";
+        public string? ImagePath { get; set; } = "https://localhost:7014/uploads/avatar.jpg";
 
 
         [NotMapped]
