@@ -26,7 +26,7 @@ namespace Project.Models
 
 
         [Display(Name = "Image")]
-        public string? ImagePath { get; set; } = "https://localhost:7014/uploads/avatar.jpg";
+        public string? ImagePath { get; set; } = "/uploads/avatar.jpg";
 
 
         [NotMapped]
